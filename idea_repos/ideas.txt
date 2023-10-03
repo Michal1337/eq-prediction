@@ -1,0 +1,10 @@
+1. historia aktywnosci:
+ - intensywnosc
+ - czas od ostatniego trzesenia ziemi
+ - czestotliwosc wystepowania
+ - liczba trzesien zmiemi
+ - czy atkywny obaszr
+2. odleglosc od granicy plyty tektonicznej
+3. ile płyt sie styka ze sobą
+4. Wzorce sedymentologiczne: Badania sedymentologiczne, czyli analiza osadów i skał, mogą dostarczyć wskazówek dotyczących wcześniejszych trzęsień ziemi oraz procesów geologicznych w regionie.
+5. Aktywność wulkaniczna: Aktywność wulkaniczna może wpływać na występowanie trzęsień ziemi. Dlatego monitorowanie wulkanów w regionie jest ważne.
