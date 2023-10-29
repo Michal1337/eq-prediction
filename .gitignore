@@ -1,2 +1,6 @@
 merge.csv
-merge.hdf5
+usgs_data.csv
+usgs_data_small.csv
+with_features.csv
+data/npys
+data/datasets
