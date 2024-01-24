@@ -217,10 +217,10 @@ model.compile(loss=tf.keras.losses.BinaryCrossentropy(from_logits=False),
 weight_for_0 = (1 / neg) * (total / 2.0)
 weight_for_1 = (1 / pos) * (total / 2.0)
 class_weight = {0: weight_for_0, 1: weight_for_1}
-history = model.fit(ds_train, epochs=20, validation_data=ds_val, class_weight=class_weight)
+history = model.fit(ds_train, epochs=20, validation_data=ds_val)
 
-model.save("../models/model_v2_cw.keras")
+model.save("../models/model_v2.keras")
 
 # save history
 history = pd.DataFrame.from_dict(history.history)
-history.to_csv("../models/history_model_v2_cw.csv", index=False)
+history.to_csv("../models/history_model_v2.csv", index=False)

@@ -23,6 +23,9 @@ data/ds_val_7
 data/ds_test_1_16
 data/ds_train_1_16
 data/ds_val_1_16
+data/ds_train_cor
+data/ds_val_cor
+data/ds_test_cor
 data/feature_distribution.csv
 data/usgs_data_small.csv
 data/usgs_data.csv

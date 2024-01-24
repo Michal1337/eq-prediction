@@ -2,18 +2,11 @@
 Repository for earthquake prediction project.
 
 ## PIPELINE:
-1. utils/get_data.ipynb - downloads data (~2h, many requests)
-2. utils/add_features.ipynb - filters data and adds features and labels (~5h)
-3. utils/make_npys.ipynb - makes .npy files for each region (~30min)
-4. utils/make_datasets.ipynb - transforms .npy files into tf.Dataset (~50min)
-5. utils/merge_datasets.ipynb - merges datasets into one (~30min)
-6. notebooks/train.ipynb - trains the model (~2h - ∞)
+1. eq_prediction/get_data.py - downloads data (~2h, many requests)
+2. eq_prediction/add_features.py - filters data and adds features and labels (~5h)
+3. eq_prediction/make_npys.py - makes .npy files for each region (~30min)
+4. eq_prediction/make_datasets.py - transforms .npy files into tf.Dataset (~50min)
+5. eq_prediction/merge_datasets.py - merges datasets into one (~30min)
+6. notebooks/train.py - trains the model (~2h - ∞)
 
-
-## TODO :
-1. STRONA
-2. Lepsze EDA
-3. Wymyślenie nowych featerów i napisanie funkcji do obliczania ich - liczba dni od ostatniego trzęsienia?, jakieś stosunki czegoś do czegoś?
-
-## Google docs:
-https://docs.google.com/document/d/1-TtjlulbLiVpVFpqWxrW3lChgbOfQPjZgN9pGFdF2fc/edit?fbclid=IwAR3njF9Zsnh2QCJTB4ldNGQlvKxJObMcXMOpnOj6f6Su9E7dgHNcwPWgdfs
+Final files are in the eq_prediction folder.
