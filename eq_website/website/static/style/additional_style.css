@@ -1,0 +1,14 @@
+.scrollable-menu {
+    height: auto;
+    width: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+
+.prediction-result {
+    width: 4em;
+    line-height: 4em;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 2em;
+}

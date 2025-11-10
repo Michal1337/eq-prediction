@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Earthquake App | Home
+{% endblock %}
+
+{% block content %}
+    <div class="container-xl p-5 my-5 border">
+        <h1>Trzęsienia ziemi - aplikacja</h1>
+        <p>Aplikacja przygotowywana jest jako część pracy inżynierskiej "Przewidywanie aktywności sejsmicznej z zastosowaniem sieci neuronowych." </p>
+        <div class='list-group list-group-flush'>
+            <h5>Autorzy:</h5>
+            <ul>
+                <li>Michał Gromadzki</li>
+                <li>Julia Kaznowska</li>
+                <li>Krzysztof Wodnicki</li>
+            </ul>
+        </div>
+        <p>Promotorka: dr Elżbieta Sienkiewicz</p>
+        <p>Praca przygotowywana w ramach kierunku Inżynieria i Analiza Danych, Wydział Matematyki i Nauk Informacyjnych, Politechnika Warszawska</p>
+        <a href="{% url 'app' %}" class="btn btn-outline-dark">Otwórz aplikację</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-xl sticky-top navbar-dark bg-dark">
+    <div class="container-xl">
+        <a href="{% url 'home' %}" class="navbar-brand">Earthquakes</a>
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+                       href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'app' %}active{% endif %}"
+                       href="{% url 'app' %}">App</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'admin:index' %}active{% endif %}"
+                       href="{% url 'admin:index' %}">Admin panel</a>
+                </li>
+            </ul>
+
+            {% if request.resolver_match.url_name == 'app' %}
+            <div class="btn-group" role="group" aria-label="Controls">
+                <a href="#offcanvasSettings"
+                   role="button" class="btn btn-outline-light"
+                   data-bs-toggle="offcanvas" aria-controls="offcanvasSettings">
+                   <i class="fa-solid fa-gear"></i>
+                </a>
+                <a href="#offcanvasFilters"
+                   role="button" class="btn btn-outline-light"
+                   data-bs-toggle="offcanvas" aria-controls="offcanvasFilters">
+                   <i class="fa-solid fa-filter"></i>
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</nav>

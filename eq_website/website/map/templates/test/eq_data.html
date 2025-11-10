@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Earthquake model test
+{% endblock %}
+
+{% block additional_imports %}
+    {% load static %}
+{% endblock %}
+
+{% block content %}
+    <div class="container-xl p-5 my-5 border">
+        <h1>Test - Earthquake model</h1>
+        <p>
+            This page shows earthquake model. For now model accounts for
+            <ol>
+                <li>time of the event,</li>
+                <li>event coordinates,</li>
+                <li>depth of the event,</li>
+                <li>earthquake magnitude,</li>
+                <li>event place (textual description of named geographic region near to the event).</li>
+            </ol>
+        </p>
+        <p>List below shows exemplary information in a nice way.</p>
+    </div>
+
+    <div class="container-xl p-5 my-5 border">
+        <h2>Earthquakes</h2>
+        <div class="list-group list-group-flush", id="eq_details_list">
+        </div>
+    </div>
+
+    {{ pins|json_script:"points_json" }}
+    <script src="{% static 'test/eq_data_js.js' %}"></script>
+
+{% endblock %}

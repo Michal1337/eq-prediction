@@ -1,0 +1,256 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Earthquake App | App
+{% endblock %}
+
+{% block additional_imports %}
+    <!-- Leaflet -->
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+
+    <!-- Custom CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style/map_style.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'style/additional_style.css' %}" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+    <!-- Settings -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasSettings" aria-labelledby="offcanvasSettingsLabel"
+         data-bs-scroll="true" data-bs-backdrop="false">
+        <div class="offcanvas-header">
+            <h3 class="offcanvas-title" id="offcanvasSettingsLabel">Settings</h3>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body overflow-visible">
+            <!-- Navigation -->
+            <div class="container my-2">
+                <h5>Navigation</h5>
+                <div class="d-flex">
+                    <button type="button"
+                            class="btn btn-outline-dark"
+                            onclick="resetMap()">Restart map position</button>
+                    <span style="width: 0.5em"></span>
+                    <div class="dropdown">
+                        <a class="btn btn-outline-dark dropdown-toggle"
+                           href="#" role="button"
+                           data-bs-toggle="dropdown" data-bs-auto-close="outside"
+                           aria-expanded="false">Country</a>
+                        <ul class="dropdown-menu">{% for continent in continents %}
+                            <li class="dropstart">
+                                <a class="btn dropdown-item dropdown-toggle" href="#"
+                                   data-bs-toggle="dropdown">{{ continent }}</a>
+                                <ul class="dropdown-menu scrollable-menu">
+                                    {% for country in countries %}
+                                    {% if country.continent == continent %}
+                                        <li><a class="btn dropdown-item"
+                                               href="#" role="button"
+                                               onclick="changePosition({{ country.lat }}, {{ country.lon }});">
+                                            {{ country.name }}
+                                        </a></li>
+                                    {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endfor %}</ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prediction -->
+            <div class="container my-2">
+                <h5>Prediction</h5>
+                <div class="btn-group btn-group-toggle my-1" data-toggle="buttons">
+                    <input type="radio"
+                           name="regionsRadio"
+                           value="show"
+                           id="regionsRadioShow"
+                           class="btn-check"
+                           autocomplete="off"
+                           onchange="toggleRegions(this)">
+                    <label class="btn btn-outline-dark" for="regionsRadioShow">Enable prediction</label>
+
+                    <input type="radio"
+                           name="regionsRadio"
+                           value="hide"
+                           id="regionsRadioHide"
+                           class="btn-check"
+                           autocomplete="off"
+                           onchange="toggleRegions(this)"
+                           checked>
+                    <label class="btn btn-outline-dark" for="regionsRadioHide">Disable prediction</label>
+                </div>
+
+                <div class="btn-group btn-group-toggle my-1" data-toggle="buttons">
+                    <input type="radio"
+                           name="predRadio"
+                           value="local"
+                           id="predRadioLocal"
+                           class="btn-check"
+                           autocomplete="off">
+                    <label class="btn btn-outline-dark" for="predRadioLocal">Local data</label>
+
+                    <input type="radio"
+                           name="predRadio"
+                           value="usgs"
+                           id="predRadioUSGS"
+                           class="btn-check"
+                           autocomplete="off"
+                           checked>
+                    <label class="btn btn-outline-dark" for="predRadioUSGS">USGS data</label>
+                </div>
+
+                <div class="input-group my-1">
+                    <label class="input-group-text bg-dark text-white" for="modelSelect">Model</label>
+                    <select class="form-select" id="modelSelect">
+                    {% for model in models %}
+                        <option value="{{ model.id }}">{{ model.name }}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <!-- Overlays -->
+            <div class="container my-2">
+                <h5>Tectonic plate boundaries</h5>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <input type="radio"
+                           name="platesRadio"
+                           value="show"
+                           id="platesRadioShow"
+                           class="btn-check"
+                           autocomplete="off"
+                           onchange="togglePlates(this)">
+                    <label class="btn btn-outline-dark" for="platesRadioShow">Show</label>
+
+                    <input type="radio"
+                           name="platesRadio"
+                           value="hide"
+                           id="platesRadioHide"
+                           class="btn-check"
+                           autocomplete="off"
+                           onchange="togglePlates(this)"
+                           checked>
+                    <label class="btn btn-outline-dark" for="platesRadioHide">Hide</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasFilters" aria-labelledby="offcanvasFiltersLabel"
+         data-bs-scroll="true" data-bs-backdrop="false">
+        <div class="offcanvas-header">
+            <h3 class="offcanvas-title" id="offcanvasFiltersLabel">Filters</h3>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body overflow-visible">
+            <div class="container my-2">
+                <h5>Filters</h5>
+
+                <div class="col-sm">
+                    <p>Date filter</p>
+                    <input type="date"
+                           value="2023-12-01" min="1950-01-01"
+                           id="date_min"
+                           onchange="onChangeMinCal(this.value)"/>
+                    <input type="date"
+                           value="2023-12-31"
+                           id="date_max"
+                           onchange="onChangeMaxCal(this.value)"/>
+                </div>
+
+                <div class="col-sm">
+                    <p>Magnitude filter</p>
+                    <div class="range_container">
+                        <div class="sliders_control">
+                            <input id="magMinSlider"
+                                   type="range"
+                                   value="2" min="0" max="10"
+                                   list="mag_values"/>
+                            <input id="magMaxSlider"
+                                   type="range"
+                                   value="7" min="0" max="10"
+                                   list="mag_values"/>
+                            <datalist id="magValues"></datalist>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-sm">
+                    <p>Depth filter</p>
+                    <div class="range_container">
+                        <div class="sliders_control">
+                            <input id="depthMinSlider"
+                                   type="range"
+                                   value="0" min="0" max="200"
+                                   list="mag_values" step="25"/>
+                            <input id="depthMaxSlider"
+                                   type="range"
+                                   value="100" min="0" max="200"
+                                   list="mag_values" step="25"/>
+                            <datalist id="depthValues"></datalist>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm">
+                    <p>Count filter</p>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Max</span>
+                        <input type="number"
+                               max="1000"
+                               value="100"
+                               class="form-control"
+                               placeholder="max"
+                               aria-label="max count"
+                               id="countMax"/>
+                    </div>
+                </div>
+
+                <button type="button"
+                        class="btn btn-outline-dark"
+                        id="submit_filters"
+                        onclick="filterEqs()">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Map -->
+    <div id="map">
+
+        <div class="leaflet-top leaflet-left"></div>
+
+        <div id="eqlist" class="leaflet-left list-group list-group-flush"></div>
+
+    </div>
+
+    <!-- Do not touch!!! -->
+    <div id="details"></div>
+
+    <!-- Parse context to usable data -->
+    {{ points|json_script:"points_json" }}
+    {{ plates|json_script:"plates_json" }}
+    {{ regions|json_script:"regions_json" }}
+
+    <!-- JS functionalities -->
+    <script src="{% static 'scripts/grid.js' %}"></script>
+    <script src="{% static 'scripts/map.js' %}"></script>
+    <script src="{% static 'scripts/utils.js' %}"></script>
+    <script src="{% static 'scripts/prediction.js' %}"></script>
+    <script src="{% static 'scripts/overlays.js' %}"></script>
+    <script src="{% static 'scripts/eq_list.js' %}"></script>
+    <script src="{% static 'scripts/points.js' %}"></script>
+    <script src="{% static 'scripts/eqs_fetch.js' %}"></script>
+    <script src="{% static 'scripts/sliders.js' %}"></script>
+    <script src="{% static 'scripts/calendars.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,175 @@
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+}
+
+#map {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	flex-grow: 1;
+}
+
+#eqlist {
+	width: 30%;
+	z-index: 9999
+}
+
+/* https://github.com/jieter/Leaflet.Grid/blob/master/L.Grid.css */
+.leaflet-grid-label .lng {
+	margin-left: 8px;
+	-webkit-transform: rotate(90deg);
+	transform: rotate(90deg);
+}
+
+.leaflet-grid-label .lat,
+.leaflet-grid-label .lng {
+	text-shadow: -2px 0 #FFFFFF, 0 2px #FFFFFF, 2px 0 #FFFFFF, 0 -2px #FFFFFF;
+}
+
+#Btn1 {
+	margin-left:25px;
+	margin-top: 25px;
+}
+
+
+/* filters */
+.range_container {
+	display: flex;
+	flex-direction: column;
+	width: 80%;
+	/*margin: 5% auto;*/
+}  
+.sliders_control {
+	position: relative;
+	min-height: 50px;
+}
+  
+.form_control {
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	font-size: 24px;
+	color: #635a5a;
+}
+  
+input[type=range]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	pointer-events: all;
+	width: 24px;
+	height: 24px;
+	background-color: #fff;
+	border-radius: 50%;
+	box-shadow: 0 0 0 1px #C6C6C6;
+	cursor: pointer;
+}
+  
+input[type=range]::-moz-range-thumb {
+	-webkit-appearance: none;
+	pointer-events: all;
+	width: 24px;
+	height: 24px;
+	background-color: #fff;
+	border-radius: 50%;
+	box-shadow: 0 0 0 1px #C6C6C6;
+	cursor: pointer;  
+}
+  
+input[type=range]::-webkit-slider-thumb:hover {
+	background: #f7f7f7;
+}
+  
+input[type=range]::-webkit-slider-thumb:active {
+	box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
+	-webkit-box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
+}
+  
+input[type="range"] {
+	-webkit-appearance: none; 
+	appearance: none;
+	height: 2px;
+	width: 100%;
+	position: absolute;
+	background-color: #C6C6C6;
+	pointer-events: none;
+}
+  
+#magMinSlider {
+	height: 0;
+	z-index: 1;
+}
+
+#depthMinSlider {
+	height: 0;
+	z-index: 1;
+}
+
+datalist {
+	margin-top: 10px;
+	/*margin-left: 10px;*/
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+}
+  
+option {
+	padding: 0;
+}
+  
+/*.sliders_control {
+	position: relative;
+	min-height: 50px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	pointer-events: all;
+	width: 24px;
+	height: 24px;
+	background-color: #fff;
+	border-radius: 50%;
+	box-shadow: 0 0 0 1px #C6C6C6;
+	cursor: pointer;
+}
+ 
+input[type=range]::-moz-range-thumb {
+	-webkit-appearance: none;
+	pointer-events: all;
+	width: 24px;
+	height: 24px;
+	background-color: #fff;
+	border-radius: 50%;
+	box-shadow: 0 0 0 1px #C6C6C6;
+	cursor: pointer;  
+}
+  
+input[type=range]::-webkit-slider-thumb:hover {
+	background: #f7f7f7;
+}
+  
+input[type=range]::-webkit-slider-thumb:active {
+	box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
+	-webkit-box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
+}
+  
+input[type="range"] {
+	-webkit-appearance: none; 
+	appearance: none;
+	height: 2px;
+	width: 100%;
+	position: absolute;
+	background-color: #C6C6C6;
+	pointer-events: none;
+}
+
+#mag_min {
+	height: 0;
+	z-index: 1;
+}*/

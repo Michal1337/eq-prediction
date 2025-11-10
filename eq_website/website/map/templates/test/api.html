@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    API test
+{% endblock %}
+
+{% block additional_imports %}
+    <!-- Leaflet -->
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+
+    <!-- Custom CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'test/style.css' %}" type="text/css" />
+{% endblock %}
+
+{% block content %}
+    <div class="container-xl p-5 my-5 border">
+        <h1>Test - API</h1>
+        <p>API similar to USGS. All parameters are optional and can be combined freely. When no parameters are passed, full list of earthquakes is retrieved. All parameters work as filters to the query, except <code>count</code> parameter, that allows to only retrieve counts.</p>
+        <p>Example of usage:</p>
+        <ul>
+            <li>List all earthquakes:<br>
+                <a href="{% url 'eqs_api' %}">{% url 'eqs_api' %}</a></li>
+            <li>Set <code>count</code> parameter to <code>True</code> to only retrieve count of matching entries:<br>
+                <a href="{% url 'eqs_api' %}?count=True">{% url 'eqs_api' %}?count=True</a></li>
+            <li>Filter the list by <code>longitude</code> and <code>latitude</code>:<br>
+                <a href="{% url 'eqs_api' %}?minlatitude=-56&maxlatitude=13&minlongitude=-82&maxlongitude=-34">{% url 'eqs_api' %}?minlatitude=-56&maxlatitude=13&minlongitude=-82&maxlongitude=-34</a></li>
+            <li>Filter the list by <code>magnitude</code> and <code>depth</code>:<br>
+                <a href="{% url 'eqs_api' %}?minmagnitude=5&maxdepth=2">{% url 'eqs_api' %}?minmagnitude=5&maxdepth=2</a></li>
+        </ul>
+        <h2>Prediction API</h2>
+        <a href="{% url 'predict_api' %}?x=25.814000&y=35.373000&model=Test">{% url 'predict_api' %}?x=25.814000&y=35.373000&model=Test</a></li>
+    </div>
+
+    <div class="container-xl p-5 my-5 border">
+        <h2>API and JS</h2>
+        <h4>and Leaflet</h4>
+        <button type="button"
+            class="btn btn-outline-dark"
+            onclick="resetMap()">Restart map position</button>
+        <button type="button"
+            class="btn btn-outline-dark"
+            onclick="printPoints(points)">Print points</button>
+        <button type="button"
+            class="btn btn-outline-dark"
+            onclick="clearPoints()">Clear points</button>
+    </div>
+
+    <div id="map" class="container-xl p-5 my-5 border"></div>
+
+    <script src="{% static 'scripts/grid.js' %}"></script>
+    <script src="{% static 'test/map.js' %}"></script>
+    <script src="{% static 'test/api_points.js' %}"></script>
+{% endblock %}

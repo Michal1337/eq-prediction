@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Map test
+{% endblock %}
+
+{% block additional_imports %}
+    <!-- Leaflet -->
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+
+    <!-- Custom CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'test/style.css' %}" type="text/css" />
+{% endblock %}
+
+{% block content %}
+    <div class="container-xl p-5 my-5 border">
+        <h1>Test - Map</h1>
+        <p>This page shows basic mapping functionalities.</p>
+        <p>For now, after loading the page a query is sent to USGS API. Result of the query is a GeoJSON file with all earthquakes that occurred in certain boundaries, since the beginning of this year, with magnitude at least 5. It also colors the points according to alert level.</p>
+
+        <div class="row">
+            <div class="col-sm">
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <input type="radio"
+                           name="apiBoundaryRadio"
+                           value="show"
+                           id="apiBoundaryRadioShow"
+                           class="btn-check"
+                           autocomplete="off"
+                           onchange="changeApiBoundary(this)">
+                    <label class="btn btn-outline-dark" for="apiBoundaryRadioShow">Show</label>
+        
+                    <input type="radio"
+                           name="apiBoundaryRadio"
+                           value="hide"
+                           id="apiBoundaryRadioHide"
+                           class="btn-check"
+                           autocomplete="off"
+                           onchange="changeApiBoundary(this)"
+                           checked>
+                    <label class="btn btn-outline-dark" for="apiBoundaryRadioHide">Hide</label>
+                    
+                </div>
+                <p>Boundary box</p>
+            </div>
+
+            <div class="col-sm">
+                <button type="button"
+                class="btn btn-outline-dark"
+                onclick="resetMap()">Restart map position</button>
+            </div>
+
+            <div class="col-sm">
+                <div class="dropdown">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                        Country</a>
+        
+                        <ul class="dropdown-menu">
+        
+                            {% for cont in continents %}
+                                <li class="dropend">
+                                    <a class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown" href="#">{{cont}}</a>
+                                    <ul class="dropdown-menu scrollable-menu">
+                                        {% for country in countries %}
+                                        {% if country.continent == cont %}
+                                            <li><a class="dropdown-item" onclick='changePosition("{{ country.lat }}", "{{country.lon}}"); return false;'>{{country.name}}</a></li>
+                                        {% endif %}  
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endfor %}
+        
+                        </ul>
+                </div>
+            </div>
+
+            <div class="col-sm">
+                <div class="container my-2">
+                    
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <input type="radio"
+                               name="platesRadio"
+                               value="show"
+                               id="platesRadioShow"
+                               class="btn-check"
+                               autocomplete="off"
+                               onchange="togglePlates(this)">
+                        <label class="btn btn-outline-dark" for="platesRadioShow">Show</label>
+        
+                        <input type="radio"
+                               name="platesRadio"
+                               value="hide"
+                               id="platesRadioHide"
+                               class="btn-check"
+                               autocomplete="off"
+                               onchange="togglePlates(this)"
+                               checked>
+                        <label class="btn btn-outline-dark" for="platesRadioHide">Hide</label>
+                        
+                    </div>
+                    <p>Tectonic plate boundaries</p>
+            </div>
+
+        </div>
+        
+
+
+
+        
+        
+
+
+    </div>
+
+    <div id="map" class="container-xl p-5 my-5 border"></div>
+
+    <!-- Parse context to usable data -->
+    {{ points|json_script:"points_json" }}
+    {{ plates|json_script:"plates_json" }}
+    {{ regions|json_script:"regions_json" }}
+
+    <script src="{% static 'scripts/grid.js' %}"></script>
+    <script src="{% static 'test/map.js' %}"></script>
+    <script src="{% static 'test/polygon.js' %}"></script>
+    <script src="{% static 'scripts/overlays.js' %}"></script>
+    <script src="{% static 'test/points.js' %}"></script>
+{% endblock %}

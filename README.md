@@ -1,12 +1,36 @@
 # eq_prediction
-Repository for earthquake prediction project.
 
-## PIPELINE:
-1. eq_prediction/get_data.py - downloads data (~2h, many requests)
-2. eq_prediction/add_features.py - filters data and adds features and labels (~5h)
-3. eq_prediction/make_npys.py - makes .npy files for each region (~30min)
-4. eq_prediction/make_datasets.py - transforms .npy files into tf.Dataset (~50min)
-5. eq_prediction/merge_datasets.py - merges datasets into one (~30min)
-6. notebooks/train.py - trains the model (~2h - ∞)
+Repository for my BSc thesis titled: `Seismic activity prediction with neural networks`. \
+Author: `Michał Gromadzki` \
+Supervisor: `PhD in Computer Science, Anna Wróblewska` and `PhD in Linguistics, Agnieszka Kaliska` \
+University: `Warsaw University of Technology, Faculty of Mathematics and Information Science` \
+Year: `2022/2023`
 
-Final files are in the eq_prediction folder.
+## Project Overview
+The aim of this work is to try to predict the earthquakes using machine learning methods. The emphasis has been put on the use of recurrent neural networks and transformer-type models. The effectiveness of the method has been verified and gives promising results for the future research. Results have been presented as a sample, practical application. They may have a positive effect regarding preventive action and rapid response in the event of an earthquake.
+
+## Results
+
+The following image presents the preview of the website along with the model prediction (top right corner).
+
+![Results](./eq_website/assets/img/wb.png)
+
+## Repository Struture
+
+1. `./data/` - Data, scalers, etc.
+2. `./eq_website/` - Website code
+3. `./models/` - Models, training histories and comparisons
+4. `./notebooks/` - Notebooks used for development
+5. `./old/` - Old files
+6. `./src/` - Source code of experiments
+7. `./utils/` - Utility and helper files
+
+## Dataset construction:
+1. `./src/get_data.py` - Downloads data (~2h, many requests)
+2. `./src/add_features.py` - Filters data and adds features and labels (~5h)
+3. `./src/make_npys.py` - Makes .npy files for each region (~30min)
+4. `./src/make_datasets.py` - Transforms .npy files into tf.Dataset (~50min)
+5. `./src/merge_datasets.py` - Merges datasets into one (~30min)
+
+
+

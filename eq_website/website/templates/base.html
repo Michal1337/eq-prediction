@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %} Earthquake App {% endblock %}</title>
+
+    <!-- Bootstrap -->
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+    <!-- Fontawesome -->
+    {% load static %}
+    <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+
+    <!-- Navbar style -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style/navbar_style.css' %}" type="text/css" />
+
+    {% block additional_imports %}
+    {% endblock %}
+</head>
+
+<body>
+    {% include 'menu.html' %}
+
+    {% block content %}
+        <div class="container-xl p-5 my-5 border">
+            <h1>Ops!</h1>
+            <p>It looks like this page doesn't have any contents yet!</p>
+            <a href="{% url 'home' %}" class="btn btn-outline-dark">Back to homepage</a>
+        </div>
+    {% endblock %}
+</body>
+
+</html>

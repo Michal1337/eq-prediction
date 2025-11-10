@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Prediction model test
+{% endblock %}
+
+{% block additional_imports %}
+    <!-- Custom CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'test/style.css' %}" type="text/css" />
+{% endblock %}
+
+{% block content %}
+    <div class="container-xl p-5 my-5 border">
+        <h1>Test - Prediction model</h1>
+        <p>
+            This page shows prediction model. For now model accounts for
+            <ol>
+                <li>model name,</li>
+                <li>last update timestamp,</li>
+                <li>if model should be available to the users,</li>
+                <li>actual model file,</li>
+                <li>input and output type,</li>
+                <li>some basic performance metrics.</li>
+            </ol>
+        </p>
+        <p>List below shows exemplary information in a nice way and tests prediction functionalities in an ugly way.</p>
+    </div>
+
+    <div class="container-xl p-5 my-5 border">
+        <h2>Model</h2>
+            <div class="d-flex justify-content-between">
+                <h5 class="mb-1">{{ model.name }}</h5>
+                <small>{{ model.last_update_timestamp }}</small>
+            </div>
+            <p>{{ model.get_input_display }} into {{ model.get_output_display }}</p>
+            <h4>Input</h4>
+            <table>
+                {% for dummy in input %}
+                {% for r in dummy %}
+                <tr>
+                    {% for v in r %}
+                    <td>
+                        {{ v }}
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+                {% endfor %}
+            </table>
+            <h4>Output</h4>
+            <p>Logits: {{ logits }}.</p>
+            <p>Probabilities: {{ prob }}.</p>
+    </div>
+
+{% endblock %}
